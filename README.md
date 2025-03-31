@@ -156,10 +156,16 @@ sudo file -s /dev/sdX1
 ```
 
 Expected output:
+
 ```
 Apple File System (APFS)
 ```
 
+Mount Drive
+
+```bash
+sudo apfs-fuse -o allow_other,uid=1000,gid=1000 /dev/sdxx /mnt/your-directory
+```
 ---
 
 ## 🟣 Step 5 - Run the Script
@@ -227,7 +233,8 @@ This method gives you:
 #### Basic Mount
 
 ```bash
-sudo apfs-fuse /dev/sdxx /mnt/your-directory
+sudo apfs-fuse -o allow_other,uid=1000,gid=1000 /dev/sdxx /mnt/your-directory
+
 ```
 
 - **apfs-fuse** is the command provided by the FUSE driver for Apple APFS.
@@ -240,8 +247,11 @@ sudo apfs-fuse /dev/sdxx /mnt/your-directory
 sudo apfs-fuse -o allow_other /dev/sdxx /mnt/your-directory
 ```
 
-- The **`-o allow_other`** option allows users other than the one who mounted the filesystem to access the files.  
-- This can be useful on multi-user systems or scripts where multiple processes need access to the mounted volume.
+Explanation:
+
+    allow_other: Permits all users on the system to access files within this mount.
+
+    uid=1000,gid=1000: Sets the numeric user ID and group ID as the owner of all files. Replace 1000:1000 with the actual UID:GID of the user who should own the files (you can find it by running id username).
 
 ---
 
