@@ -55,14 +55,33 @@ The official repository and latest scripts are available at:
 
 ---
 
-## 🟣 Step 1 - Setup on macOS
+## 🟣 Step 1: Install Dependencies on macOS
 
-If you plan to first copy your data to an external drive on macOS:
+1️⃣ Install Homebrew
+
+Homebrew is the package manager for macOS and is used to install the required software packages, like rsync. Run the following command to install Homebrew:
 
 ```bash
-brew install rsync findutils coreutils
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
+2️⃣ Install rsync
+
+Once Homebrew is installed, run this command to install rsync, which will be used for the backup:
+
+```bash
+brew install rsync
+```
+
+3️⃣ Verify Installation
+
+Check if rsync is installed correctly by running:
+
+```bash
+rsync --version
+```
+
+You should see the version number of rsync. If you see errors like Error: No such file or directory - getcwd, make sure you’re in a valid directory (run cd ~ to go to your home directory), and retry the installation.
 ---
 
 ## 🟣 Step 2 - Setup on Linux
