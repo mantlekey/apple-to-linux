@@ -86,23 +86,47 @@ You should see the version number of rsync. If you see errors like Error: No suc
 
 ## 🟣 Step 2 - Setup on Linux
 
+### Rocky Linux 8
+
 ```bash
-sudo dnf install rsync findutils util-linux gcc make cmake fuse-devel git
+sudo dnf install rsync findutils util-linux gcc make cmake \
+                 fuse3-devel git zlib-devel bzip2-devel
+```
+### Ubuntu 24
+
+```bash
+sudo apt update
+sudo apt install rsync findutils util-linux build-essential cmake \
+                 libfuse3-dev git zlib1g-dev libbz2-dev
 ```
 
 ---
 
 ## 🟣 Step 3 - Compile `apfs-fuse` on Linux
 
+### Only move to step 3 after all the pakcages are installed. 
+
 ```bash
+
 git clone https://github.com/sgan81/apfs-fuse.git
 cd apfs-fuse
+
+# Initialize and update submodules
 git submodule update --init --recursive
+
+# Create a separate build directory
 mkdir build
 cd build
+
+# Generate build files with CMake
 cmake ..
+
+# Build apfs-fuse
 make
+
+# Install apfs-fuse
 sudo make install
+
 ```
 
 ### ✅ Verify:
@@ -140,7 +164,7 @@ Apple File System (APFS)
 
 ## 🟣 Step 5 - Run the Script
 
-1️⃣ Clone the script from [MantleKey GitHub](https://github.com/mantlekey/apple-to-linux-backup)
+1️⃣ Clone the script from [MantleKey GitHub]([https://github.com/mantlekey/apple-to-linux-backup](https://github.com/mantlekey/apple-to-linux))
 
 2️⃣ Make it executable:
 
@@ -196,6 +220,39 @@ This method gives you:
     ```
     ~/apfs-backup/logs/
     ```
+### Here are a couple of basic **apfs-fuse** usage examples with explanations you can include in your README:
+
+---
+
+#### Basic Mount
+
+```bash
+sudo apfs-fuse /dev/sdxx /mnt/your-directory
+```
+
+- **apfs-fuse** is the command provided by the FUSE driver for Apple APFS.
+- **`/dev/sdxx`** is the APFS partition you want to mount.  
+- **`/mnt/your-directory`** is your chosen mount point.
+
+### Mount with Allowing Other Users to Access the Filesystem
+
+```bash
+sudo apfs-fuse -o allow_other /dev/sdxx /mnt/your-directory
+```
+
+- The **`-o allow_other`** option allows users other than the one who mounted the filesystem to access the files.  
+- This can be useful on multi-user systems or scripts where multiple processes need access to the mounted volume.
+
+---
+
+**Notes**:
+
+1. **Mounting via `mount -t apfs`** does **not** work with apfs-fuse because it’s a FUSE driver, not a kernel module. Always use the **`apfs-fuse`** command directly.
+2. Depending on how **apfs-fuse** was compiled, write support may be incomplete or disabled. You may need to confirm the read/write capabilities in your specific environment.
+3. Unmounting is handled with **`fusermount -u /mnt/your-directory`** (on most Linux distributions) or **`umount /mnt/your-directory`** in some cases. 
+4. Ensure the **fuse** module is loaded (generally it’s loaded by default on modern distributions).
+
+Feel free to adjust paths and device names to match your environment.
 
 ---
 
