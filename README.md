@@ -1,5 +1,5 @@
 # apple-to-linux
-If you need to transfer large directories with lots of files this worflow is for you. If you are exporting your photos, icloud or any files from IOS to Linux this will help you. 
+If you need to transfer large directories with lots of files such as pictures, photos, videos, and etc this worflow is for you. If you are exporting your photos, icloud or any files from IOS to Linux this will help you. 
 
 Perfect! Here's a professional, GitHub-friendly, and fully styled version:
 
